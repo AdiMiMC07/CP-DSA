@@ -1,10 +1,16 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-class NumArray {
+class SGT {
 public:
     vector<int>segmentTree,arr;
     int n;
+    SGT(vector<int>&nums){
+        n = nums.size();
+        arr = nums;
+        segmentTree.resize(4*n);
+        build(0,0,n-1);
+    }
     void build(int ind,int low,int hi){
         if(low==hi){
             segmentTree[ind] = arr[low];
@@ -15,7 +21,7 @@ public:
         build(2*ind+2,mid+1,hi);
         segmentTree[ind] = segmentTree[2*ind+1] + segmentTree[2*ind+2];
     }
-    int findSum(int low,int hi,int left,int right,int ind){
+    int query(int low,int hi,int left,int right,int ind){
         if(low>=left && hi<=right){
             return segmentTree[ind];
         }
